@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "255072907531",
+    "project_id": "the-chat-crew-cac90",
+    "storage_bucket": "the-chat-crew-cac90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255072907531:android:ff35fa1b1aa8f6b9e5320e",
+        "android_client_info": {
+          "package_name": "com.example.firebase_messaging_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255072907531-fndp6mj10e4h1eug7dmodlflp79cafmb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_messaging_app",
+            "certificate_hash": "b85fc2305e38602f7623377a8a2ae6b01ff1e5d8"
+          }
+        },
+        {
+          "client_id": "255072907531-7ei18beapipq3qe1hlaaj9ilgi0v4jn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAelUZ--yfD11dvJ4ODh5XOO7z-YKMifgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255072907531-7ei18beapipq3qe1hlaaj9ilgi0v4jn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
