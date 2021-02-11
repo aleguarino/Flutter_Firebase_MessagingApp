@@ -9,6 +9,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
+  final store = FirebaseFirestore.instance.collection('chat_messages');
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -29,6 +30,23 @@ class _MyHomePageState extends State<MyHomePage> {
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
     setState(() => _signedIn = false);
+  }
+
+  void _addMessage(String value) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await widget.store.add({
+        'author': user.displayName ?? 'Anonymous',
+        'author_id': user.uid,
+        'photo_url': user.photoURL ?? 'https://placehold.it/100x100',
+        'timestamp': Timestamp.now().millisecondsSinceEpoch,
+        'value': value,
+      });
+    }
+  }
+
+  void _deleteMessage(String docId) async {
+    await widget.store.doc(docId).delete();
   }
 
   @override
@@ -55,13 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('chat_messages')
-                    .snapshots(),
+                stream: widget.store.orderBy('timestamp').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    if (snapshot.data.docs.isEmpty) {
+                      return Center(
+                        child: Text('No messages to display'),
+                      );
+                    }
                     return MessageWall(
                       messages: snapshot.data.docs,
+                      onDelete: _deleteMessage,
                     );
                   }
                   return Center(
@@ -72,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             if (_signedIn)
               MessageForm(
-                onSubmit: (value) => print('==> $value'),
+                onSubmit: _addMessage,
               )
             else
               Container(
